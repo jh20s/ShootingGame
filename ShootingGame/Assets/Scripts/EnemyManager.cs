@@ -42,10 +42,9 @@ public class EnemyManager : MonoBehaviour
         if (currentTime > createTime)
         {
             GameObject enemy = null;
-            if (UnityEngine.Random.Range(0, 10) < 0)
+            if (UnityEngine.Random.Range(0, 10) < 7)
             {
                 enemy = ObjectPoolManager.Instance.EnableGameObject(Enemy1);
-                print(enemy);
             }
             else
             {

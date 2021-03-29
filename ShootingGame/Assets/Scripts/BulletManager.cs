@@ -9,11 +9,55 @@ public class BulletManager : MonoBehaviour
     public static string BulletTag = "BulletObject";
     public static string Bullet1 = "Bullet1";
     public static string Bullet2 = "Bullet2";
+    private int MaxBulletCnt;
+    private int NowBulletCnt;
+    public delegate void BulletObserver(int now, int max);
+    public event BulletObserver BulletObserverEvent;
+
+    public void BulletCntObserver(BulletObserver observer)
+    {
+        BulletObserverEvent += observer;
+    }
+    public void notifyBulletCnt()
+    {
+        BulletObserverEvent.Invoke(NowBulletCnt,MaxBulletCnt);
+    }
+
+    public int NowBulletCntProp
+    {
+        get
+        {
+            return NowBulletCnt;
+        }
+        set
+        {
+            if (0 <= value && value <= MaxBulletCnt)
+            {
+                NowBulletCnt = value;
+            }
+            notifyBulletCnt();
+        }
+    }
+
+
 
     public static string BombTag = "BombObject";
     public static string Bomb1 = "Bomb1";
     private int MaxBombCnt;
     private int NowBombCnt;
+
+    public delegate void BombObserver(int number);
+    public event BombObserver BombObserverEvent;
+
+    public void BombCntObserver(BombObserver observer)
+    {
+        BombObserverEvent += observer;
+    }
+    public void notifyBombCnt()
+    {
+        BombObserverEvent.Invoke(NowBombCnt);
+    }
+
     public int BombCnt
     {
         get
@@ -22,23 +66,13 @@ public class BulletManager : MonoBehaviour
         }
         set
         {
-            NowBombCnt = MaxBombCnt < value? MaxBombCnt : value;
+            if(0<= value && value <= MaxBombCnt)
+            {
+                NowBombCnt = value;
+            }
+            notifyBombCnt();
         }
     }
-
-    /*
-     총알의 종류
-     현재 총알의 개수
-     총알개수 증가
-     총알속도 아이템
-     총알 부피 아이템
-
-
-     폭탄의 종류
-     현재폭탄의 개수
-     폭탄개수 증가
-
-     */
 
     void Awake()
     {
@@ -51,12 +85,15 @@ public class BulletManager : MonoBehaviour
     void Start()
     {
         //미사일 생성
-        ObjectPoolManager.Instance.CreateDictTable(Resources.Load(Bullet1) as GameObject, Bullet1, BulletTag);
-        ObjectPoolManager.Instance.CreateDictTable(Resources.Load(Bullet2) as GameObject, Bullet2, BulletTag);
+        NowBulletCnt = 5;
+        MaxBulletCnt = 5;
+        ObjectPoolManager.Instance.CreateDictTable(Resources.Load(Bullet1) as GameObject, Bullet1, BulletTag, MaxBulletCnt, 0);
+        ObjectPoolManager.Instance.CreateDictTable(Resources.Load(Bullet2) as GameObject, Bullet2, BulletTag, MaxBulletCnt, 0);
 
         //폭탄생성
         NowBombCnt = 3;
         MaxBombCnt = 5;
+        BombCnt = NowBombCnt;
         ObjectPoolManager.Instance.CreateDictTable(Resources.Load(Bomb1) as GameObject, Bomb1, BombTag, MaxBombCnt,0);
     }
 
@@ -81,16 +118,30 @@ public class BulletManager : MonoBehaviour
         {
             bullet.transform.position = Pos;
             bullet.SetActive(true);
+            NowBulletCntProp--;
+        }
+    }
+    public void DisalbeBulletObject(GameObject obj)
+    {
+        if (obj.tag.Equals(BulletTag))
+        {
+            ObjectPoolManager.Instance.DisableGameObject(obj, obj.name);
+            NowBulletCntProp++;
+        }
+        else
+        {
+            Debug.LogError("총알이 아닌 obj가 들어왔습니다");
+            Destroy(obj);
         }
     }
 
     public void EnableBombObject(string BombName, Vector3 Pos)
     {
+        
         if (NowBombCnt == 0)
         {
             return;
         }
-        NowBombCnt--;
         GameObject bomb = null;
         if (BombName.Equals(Bomb1))
         {
@@ -100,6 +151,7 @@ public class BulletManager : MonoBehaviour
         {
             bomb.transform.position = Pos;
             bomb.SetActive(true);
+            BombCnt--;
         }
     }
 }

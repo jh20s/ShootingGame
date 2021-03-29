@@ -20,7 +20,12 @@ public class DestroyZone : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        ObjectPoolManager.Instance.DisableGameObject(other.gameObject, other.gameObject.name);
+        if (other.gameObject.tag.Equals(BulletManager.BulletTag)) { 
+            BulletManager.Instance.DisalbeBulletObject(other.gameObject);
+        }
+        else { 
+            ObjectPoolManager.Instance.DisableGameObject(other.gameObject, other.gameObject.name);
+        }
     }
 
 }

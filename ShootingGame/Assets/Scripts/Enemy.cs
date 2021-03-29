@@ -48,9 +48,9 @@ public class Enemy : MonoBehaviour
         //부딪친 객체 삭제
         if (other.gameObject.tag.Equals(BulletManager.BulletTag))
         {
-            ObjectPoolManager.Instance.DisableGameObject(other.gameObject,other.gameObject.name);
+            BulletManager.Instance.DisalbeBulletObject(other.gameObject);
         }
-        else if (other.gameObject.name.Contains(BulletManager.BombTag)){
+        else if (other.gameObject.tag.Equals(BulletManager.BombTag)){
 
         }
         else
@@ -64,6 +64,7 @@ public class Enemy : MonoBehaviour
         {
             ItemManager.Instance.EnableItemObject(ItemManager.ItemBomb, gameObject.transform.position);
         }
+
         ObjectPoolManager.Instance.DisableGameObject(gameObject, gameObject.name);
     }
 
