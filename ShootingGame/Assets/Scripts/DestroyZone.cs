@@ -23,6 +23,10 @@ public class DestroyZone : MonoBehaviour
         if (other.gameObject.tag.Equals(BulletManager.BulletTag)) { 
             BulletManager.Instance.DisalbeBulletObject(other.gameObject);
         }
+        else if (other.gameObject.name.Equals("Player"))
+        {
+            print("어케됨?");
+        }
         else { 
             ObjectPoolManager.Instance.DisableGameObject(other.gameObject, other.gameObject.name);
         }

@@ -10,14 +10,18 @@ public class ItemUiManager : MonoBehaviour
     public string BulletString = "총알 장전 : ";
     public string BombString = "폭탄 개수 : ";
 
+    void Awake()
+    {
+        BulletManager.Instance.BombCntObserver(BombCntObserver);
+        BulletManager.Instance.BulletCntObserver(BulletCntObserver);
+    }
     // Start is called before the first frame update
     void Start()
     {
         BulletCntUI.text = BulletString;
         BombCntUI.text = BombString;
 
-        BulletManager.Instance.BombCntObserver(BombCntObserver);
-        BulletManager.Instance.BulletCntObserver(BulletCntObserver);
+       
     }
 
     // Update is called once per frame
