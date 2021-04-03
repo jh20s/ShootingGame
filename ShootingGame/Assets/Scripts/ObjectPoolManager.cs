@@ -59,7 +59,6 @@ public class ObjectPoolManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("other gameObject Destory name: " + obj);
             Destroy(obj);
         }
     }

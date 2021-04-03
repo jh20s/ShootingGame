@@ -14,10 +14,11 @@ public class Enemy : MonoBehaviour
     {
         int randValue = UnityEngine.Random.Range(0, 10);
 
-        if (randValue < 10)
+        if (randValue < 5)
         {
             GameObject target = GameObject.Find("Player");
-            
+            if (target == null)
+                return;
             dir = target.transform.position - transform.position;
             dir.Normalize();
         }
@@ -45,22 +46,14 @@ public class Enemy : MonoBehaviour
         GameObject explosion = Instantiate(explosionFactory);
         explosion.transform.position = transform.position;
 
-        //부딪친 객체 삭제
         if (other.gameObject.tag.Equals(BulletManager.BulletTag))
         {
             BulletManager.Instance.DisalbeBulletObject(other.gameObject);
         }
-        else if (other.gameObject.tag.Equals(BulletManager.BombTag)){
-
-        }
-        else
-        {
-            Debug.Log("other gameObject Destory name: " + other.gameObject);
-            Destroy(other.gameObject);
-        }
+        
 
         //아이템 생성
-        if (gameObject.name.Equals(EnemyManager.Instance.Enemy2))
+        if (gameObject.name.Equals(EnemyManager.Enemy2))
         {
             ItemManager.Instance.EnableItemObject(ItemManager.ItemBomb, gameObject.transform.position);
         }

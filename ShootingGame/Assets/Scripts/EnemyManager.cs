@@ -15,9 +15,11 @@ public class EnemyManager : MonoBehaviour
     public Transform[] spawnPoints;
 
     //TO-DO 에너미 이름들 정리해서 get으로 반환하는 메서드 만들기.
-    public string EnemyTag = "EnemyObject";
-    public string Enemy1 = "Enemy1";
-    public string Enemy2 = "Enemy2";
+    public static string EnemyTag = "EnemyObject";
+    public static string Enemy1 = "Enemy1";
+    public static string Enemy2 = "Enemy2";
+    
+
 
     void Awake()
     {
