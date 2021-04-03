@@ -74,12 +74,22 @@ public class BulletManager : MonoBehaviour
         }
     }
 
+    public void PlayerReset()
+    {
+        BombCnt = 3;
+        NowBulletCntProp = 5;
+    }
+
+
+
+
     void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
         }
+        GameObject.Find("Player").GetComponent<PlayerState>().PlayerResetEventSet(PlayerReset);
     }
 
     void Start()

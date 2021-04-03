@@ -1093,7 +1093,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100000, guid: bd16a121ccdf0674daacc3277d88c3c0, type: 3}
       propertyPath: m_Name
-      value: Plane1
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: bd16a121ccdf0674daacc3277d88c3c0, type: 3}
       propertyPath: m_RootOrder
@@ -1150,6 +1150,10 @@ PrefabInstance:
     - target: {fileID: 400000, guid: bd16a121ccdf0674daacc3277d88c3c0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: bd16a121ccdf0674daacc3277d88c3c0, type: 3}
+      propertyPath: m_CastShadows
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bd16a121ccdf0674daacc3277d88c3c0, type: 3}
@@ -2055,6 +2059,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GameOverButton: {fileID: 1032749497}
+  RetryButton: {fileID: 0}
   RetryCount: {fileID: 1198902848}
   RetryCountUI: {fileID: 1363847052}
 --- !u!1 &1570386473

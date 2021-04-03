@@ -12,13 +12,17 @@ public class ScoreManager : MonoBehaviour
     public Text bestScoreUI;
     private int bestScore;
     private int currentScore;
+
+
     
+
     void Awake()
     {
         if(Instance == null)
         {
             Instance = this;
         }
+        GameObject.Find("Player").GetComponent<PlayerState>().PlayerResetEventSet(PlayerReset);
     }
     
     // Start is called before the first frame update
@@ -28,6 +32,8 @@ public class ScoreManager : MonoBehaviour
         currentScoreUI.text = "현재 점수 : " + currentScore;
         bestScore = PlayerPrefs.GetInt("Best Score", 0);
         bestScoreUI.text = "최고 점수 : " + bestScore;
+
+        
     }
 
     // Update is called once per frame
@@ -53,5 +59,11 @@ public class ScoreManager : MonoBehaviour
                 PlayerPrefs.SetInt("Best Score", bestScore);
             }
         }
+    }
+
+
+    public void PlayerReset()
+    {
+        Score = 0;
     }
 }

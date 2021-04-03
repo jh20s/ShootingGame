@@ -7,8 +7,13 @@ public class ButtonManager : MonoBehaviour
     private int DieCount = 10;
     public static ButtonManager Instance = null;
     public GameObject GameOverButton;
+
+    public GameObject RetryButton;
     public GameObject RetryCount;
     public Text RetryCountUI;
+
+    public GameObject RestartButton;
+
     IEnumerator ShowDieCorutine;
     PlayerState mPlayerState;
 
@@ -21,18 +26,17 @@ public class ButtonManager : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         mPlayerState = GameObject.Find("Player").GetComponent<PlayerState>();
         GameOverButton.SetActive(false);
     }
 
-    // Update is called once per frame
     void Update()
     {
         
     }
+
     IEnumerator ShowDie()
     {
         int count = 0;
@@ -45,6 +49,7 @@ public class ButtonManager : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
             count++;
         }
+        RetryButton.SetActive(false);
     }
 
     public void ShowGameOver()
@@ -54,10 +59,18 @@ public class ButtonManager : MonoBehaviour
         StartCoroutine(ShowDieCorutine);
     }
 
-    public void ClickRetryButton()
+    public void OnClickRetryButton()
     {
-        mPlayerState.PlayerSetActive(true);
         GameOverButton.SetActive(false);
+        mPlayerState.PlayerSetActive(true);
         StopCoroutine(ShowDieCorutine);
+    }
+
+    public void OnClickRestartButton()
+    {
+        GameOverButton.SetActive(false);
+        mPlayerState.PlayerSetActive(true);
+        StopAllCoroutines();
+        mPlayerState.PlayerReset();
     }
 }
