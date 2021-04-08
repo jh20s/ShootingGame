@@ -30,7 +30,10 @@ public class StageManager : SingleToneMaker<StageManager>
     IEnumerator NextStageCoroutine()
     {
         while (true) {
-
+            int hp = stage > 5 ? 5 : stage;
+            float speed = stage * 2;
+            int moving = stage * 2 > 20 ? 20 : stage * 2;
+            EnemyManager.Instance.enemyStateSet(hp, speed, moving);
             yield return new WaitForSeconds(stageTime);
             
             //보스생성전략  startegy 패턴 메서드로 대체 필요 -> 전략관리 클래스 필요
@@ -47,10 +50,7 @@ public class StageManager : SingleToneMaker<StageManager>
             
             
             //startegy 패턴 메서드로 난이도 전략으로 대체 필요 -> 전략관리 클래스 필요
-            int hp = stage > 5 ? 5 : stage;
-            float speed = stage * 2;
-            int moving = stage*2 > 20 ? 20 : stage*2;
-            EnemyManager.Instance.enemyStateSet(hp, speed, moving);
+            
         }
     }
 
