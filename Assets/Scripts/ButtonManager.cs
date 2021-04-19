@@ -54,6 +54,7 @@ public class ButtonManager : SingleToneMaker<ButtonManager>
         GameOverButton.SetActive(false);
         mPlayerState.PlayerSetActive(true);
         StopCoroutine(ShowDieCorutine);
+        BulletManager.Instance.PlayerReset();
     }
 
     public void OnClickRestartButton()
